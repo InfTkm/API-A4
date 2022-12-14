@@ -1,0 +1,31 @@
+syntax = "proto2";
+
+message Book {
+    required string ISBN = 1;
+    required string title = 2;
+    required string author = 3;
+    repeated string genre = 4;
+    required int32 year = 5;
+}
+
+enum Status {
+    available = 0;
+    taken = 1;
+}
+
+message InventoryItem {
+    required int32 number = 1;
+    oneof type {
+        Book book = 2;
+    }
+    required Status status = 3;
+}
+
+service InventoryService {
+    rpc CreateBook(Book) returns (Book);
+    rpc GetBook(GetBookRequest) returns (Book);
+}
+
+message GetBookRequest {
+    required string ISBN = 1;
+}
